@@ -1,0 +1,49 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1 class="text-info text-center"> All Tasks </h1>
+<div class="container">
+    
+
+<div class="row p-0">
+    <div class="col-md-12 d-md-flex justify-content-around">
+    {% for data in task %}
+    <div class="col-md-4" >
+        <div class="card" style="width: 22rem;">
+            <div class="card-header">
+                <h5 class="card-title">{{data.id}} . {{data.title}} </h5>
+              </div>
+            <div class="card-body">
+              <p class="card-text">{{data.description}}</p>
+            </div>
+            <ul class="list-group list-group-flush">
+              <li class="list-group-item">Assigned Date : {{data.assigned_date}}</li>
+              <li class="list-group-item">
+                Category : {% for cat in data.category.all %} 
+                <button class="btn btn-primary btn-sm " disabled > {{cat.name}} </button>
+                {% endfor %}
+              </li>
+            </ul>
+            <div class="card-body">
+            {% if data.is_completed == False %}
+              <a class="btn btn-success" href="{% url 'edit_task' data.id %}" class="card-link">Edit</a>
+              <a class="btn btn-danger" href="{% url 'delete_task' data.id %}" class="card-link">Delete</a>
+            {% else %}
+            <a class="btn btn-info text-light" href="">Completed</a>
+            {% endif %}
+            </div>
+        </div>
+    </div>
+    
+    <!-- <div class="card col-md-4 ">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item text-center">{{data.title}}</li>
+          <li class="list-group-item">A second item</li>
+          <li class="list-group-item">A third item</li>
+        </ul>
+    </div> -->
+   
+    {% endfor %}
+</div>
+</div>
+</div>
+{% endblock %}
